@@ -1,0 +1,21 @@
+# Terraform
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+*.tfvars
+*.tfvars.json
+
+# Private keys and secrets
+*.pem
+*.key
+*.crt
+*.env
+secrets.yml
+
+# Ansible generated artifacts
+ansible/hosts.ini
+
+# Editor/OS
+.DS_Store
+.vscode/
+.idea/
