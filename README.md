@@ -1,6 +1,6 @@
-Trucking Tracker Web Server Deployment: Infrastructure & Configuration Automation
+# Trucking Tracker Web Server Deployment: Infrastructure & Configuration Automation
 
-🚀 Project Overview: Infrastructure as Code (IaC) for TruckCo Logistics
+## Project Overview: Infrastructure as Code (IaC) for TruckCo Logistics
 
 This project implements a robust, two-phase automated deployment for the initial web server footprint of the TruckCo Logistics application using industry-leading DevOps practices.
 
@@ -10,7 +10,7 @@ Terraform provisions all immutable Azure resources, including secure networking,
 Phase 2: Configuration Management (Ansible)
 Ansible automatically connects to the newly provisioned VM to harden security, install dependencies (Nginx), configure the host firewall, and deploy the application stub.
 
-🎯 Key Design Decisions
+### Key Design Decisions
 
 Component
 
@@ -42,7 +42,7 @@ Strict SSH Restriction
 
 The NSG rule for Port 22 (SSH) is locked down to a single IP address (10.2.82.15/32), following the Principle of Least Privilege to minimize the internet-facing attack surface.
 
-🛠️ Prerequisites and Environment Setup
+## Prerequisites and Environment Setup
 
 To successfully run this deployment pipeline, ensure the following tools are installed and configured:
 
@@ -57,7 +57,7 @@ ansible-galaxy collection install community.general
 
 SSH Key Pair: A working private key (~/.ssh/id_rsa) and public key (~/.ssh/id_rsa.pub) are required for Ansible connectivity and VM provisioning, respectively.
 
-⚙️ Variable Configuration
+### Variable Configuration
 
 The deployment uses the admin username marciomjr. Create a file named terraform.tfvars in the root directory to provide the necessary secrets and location parameters:
 
@@ -88,7 +88,7 @@ my_public_ip_cidr   = "10.2.82.15/32"
 ssh_public_key_path = "~/.ssh/id_rsa.pub"
 
 
-➡️ Execution Steps
+## Execution Steps
 
 Step 1: Deploy Azure Infrastructure (Terraform)
 
@@ -116,7 +116,7 @@ terraform apply -var-file="terraform.tfvars"
 
 Confirm with yes when prompted. Upon completion, the VM's public IP will be displayed, and the hosts.ini file will be ready.
 
-Step 2: Configure Server (Ansible)
+### Step 2: Configure Server (Ansible)
 
 This step connects to the VM using the generated inventory and applies the desired state configuration.
 
@@ -127,7 +127,7 @@ ansible-playbook -i hosts.ini setup_server.yml
 
 The playbook will execute the 11 tasks outlined below.
 
-🧠 Ansible Deep Dive: setup_server.yml Configuration
+## Ansible: setup_server.yml Configuration
 
 The Ansible playbook is a declarative configuration file that ensures the server reaches the desired, secured state.
 
@@ -191,7 +191,7 @@ Edits /etc/ssh/sshd_config to set PermitRootLogin no and PasswordAuthentication 
 
 Enforces key-based authentication for the administrative user (marciomjr) and disables the highest-privilege entry point, enhancing overall system security.
 
-✅ Verification
+## Verification
 
 Upon successful execution of both Terraform and Ansible:
 
@@ -203,7 +203,7 @@ The portal should load, displaying the "Welcome to the TruckCo Logistics Portal.
 
 Security Test: Attempt to SSH into the VM using a different computer or a user other than marciomjr. The connection should be immediately refused by the NSG or the SSH daemon.
 
-🗑️ Clean Up
+## Clean Up
 
 To destroy all deployed Azure resources and avoid incurring charges, run:
 
